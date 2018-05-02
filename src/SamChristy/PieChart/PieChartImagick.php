@@ -107,6 +107,22 @@ class PieChartImagick extends PieChart {
         return false;  // The output method or format is missing!
     }
 
+    protected function _base64($format)
+    {
+        switch ($format) {
+            case parent::FORMAT_GIF:
+                $this->canvas->setImageFormat('gif');
+                break;
+            case parent::FORMAT_JPEG:
+                $this->canvas->setImageFormat('jpeg');
+                break;
+            case parent::FORMAT_PNG:
+                $this->canvas->setImageFormat('png');
+                break;
+        }
+        return base64_encode($this->canvas);
+    }
+
     /**
      * Draws the legend for the pieChart, if $this->hasLegend is true.
      * @param int $legendOffset The number of pixels the legend is offset by the title.

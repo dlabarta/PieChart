@@ -233,6 +233,11 @@ abstract class PieChart {
     public function savePNG($filename) {
         return $this->_output(self::OUTPUT_SAVE, self::FORMAT_PNG, $filename);
     }
+
+    public function base64($format)
+    {
+        return $this->_base64($format);
+    }
 }
 
 /**
