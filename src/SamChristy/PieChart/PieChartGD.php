@@ -23,7 +23,9 @@ class PieChartGD extends PieChart {
         $this->canvas = imageCreateTrueColor($this->width, $this->height);
 
         // Set anti-aliasing for the pie chart.
-        imageAntiAlias($this->canvas, true);
+        if (function_exists('imageantialias')) {
+            imageAntiAlias($this->canvas, true);
+        }
 
         imageFilledRectangle($this->canvas, 0, 0, $this->width, $this->height,
                 $this->_convertColor($this->backgroundColor));
@@ -152,6 +154,28 @@ class PieChartGD extends PieChart {
         }
         
         return false;  // The output method or format is missing!
+    }
+
+    protected function _base64($format)
+    {
+        ob_start();
+        switch ($format) {
+            case parent::FORMAT_GIF:
+                imageGIF($this->canvas);
+                break;
+
+            case parent::FORMAT_JPEG:
+                imageJPEG($this->canvas, NULL, $this->quality);
+                break;
+
+            case parent::FORMAT_PNG:
+                imagePNG($this->canvas);
+                break;
+        }
+        $imageData = ob_get_contents();
+        ob_end_clean();
+
+        return base64_encode($imageData);
     }
 
     /**
