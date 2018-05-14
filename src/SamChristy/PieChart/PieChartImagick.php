@@ -120,6 +120,7 @@ class PieChartImagick extends PieChart {
                 $this->canvas->setImageFormat('png');
                 break;
         }
+
         return base64_encode($this->canvas);
     }
 
